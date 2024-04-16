@@ -8,6 +8,7 @@ paths:
   /todos:
     get:
       summary: List all todo items
+      operationId: getTodoItems
       responses:
         '200':
           description: An array of to do items

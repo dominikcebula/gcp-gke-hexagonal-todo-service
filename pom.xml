@@ -2,28 +2,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dominikcebula.todo.service</groupId>
-    <artifactId>todo-service-parent</artifactId>
+    <artifactId>todo-service-modules</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <parent>
+        <groupId>com.dominikcebula.todo.service</groupId>
+        <artifactId>todo-service-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>./parent/pom.xml</relativePath>
+    </parent>
+
     <modules>
+        <module>parent</module>
         <module>api</module>
         <module>api-docs</module>
         <module>api-client</module>
         <module>api-server-stubs</module>
         <module>service</module>
     </modules>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.openapitools</groupId>
-                    <artifactId>openapi-generator-maven-plugin</artifactId>
-                    <version>7.4.0</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
 </project>
