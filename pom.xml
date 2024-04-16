@@ -14,4 +14,16 @@
         <module>api-server-stubs</module>
         <module>service</module>
     </modules>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>7.4.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
