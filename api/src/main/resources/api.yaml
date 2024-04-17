@@ -11,24 +11,43 @@ paths:
       operationId: getTodoItems
       responses:
         '200':
-          description: An array of to do items
+          description: An array of todo items
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/TodoItems"
+    post:
+      summary: Create a new todo item
+      operationId: createTodoItem
+      requestBody:
+        description: Create a new todo item
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoItem"
+      responses:
+        '200':
+          description: Created todo item
+          content:
+            applicatiion/json:
+              schema:
+                $ref: "#/components/schemas/TodoItem"
 components:
   schemas:
     TodoItem:
       type: object
       required:
-        - id
         - name
+        - completed
       properties:
         id:
-          type: integer
-          format: int64
+          type: string
+          format: uuid
         name:
           type: string
+        completed:
+          type: boolean
     TodoItems:
       type: array
       items:

@@ -10,13 +10,13 @@ import java.util.UUID;
 @EqualsAndHashCode
 @ToString
 public class TodoItem {
-    private final String id;
-    private final String description;
+    private final UUID id;
+    private final String name;
     private final boolean completed;
 
-    public TodoItem(String description) {
-        id = UUID.randomUUID().toString();
-        this.description = description;
+    public TodoItem(String name) {
+        id = UUID.randomUUID();
+        this.name = name;
         completed = false;
     }
 }

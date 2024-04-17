@@ -112,6 +112,7 @@
                             <generatorName>spring</generatorName>
                             <apiPackage>com.dominikcebula.todo.service.api</apiPackage>
                             <modelPackage>com.dominikcebula.todo.service.model</modelPackage>
+                            <modelNameSuffix>Dto</modelNameSuffix>
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
                             </configOptions>

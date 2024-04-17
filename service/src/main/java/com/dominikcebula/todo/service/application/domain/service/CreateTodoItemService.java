@@ -12,7 +12,7 @@ public class CreateTodoItemService implements CreateTodoItemUseCase {
 
     @Override
     public TodoItem createTodoItem(CreateTodoItemCommand command) {
-        TodoItem todoItem = new TodoItem(command.description());
+        TodoItem todoItem = new TodoItem(command.name());
 
         todoItemsRepository.save(todoItem);
 
