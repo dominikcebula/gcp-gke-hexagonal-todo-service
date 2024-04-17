@@ -1,4 +1,4 @@
-package com.dominikcebula.todo.service.application.rest;
+package com.dominikcebula.todo.service.adapter.in.rest;
 
 import com.dominikcebula.todo.service.api.TodosApi;
 import com.dominikcebula.todo.service.model.TodoItem;
