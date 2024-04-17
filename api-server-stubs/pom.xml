@@ -81,6 +81,7 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>unpack-openapi-specification</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>unpack</goal>
@@ -104,6 +105,7 @@
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>generate-server-stubs</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>

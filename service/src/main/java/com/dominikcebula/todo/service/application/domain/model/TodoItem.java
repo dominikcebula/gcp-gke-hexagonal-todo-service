@@ -14,9 +14,9 @@ public class TodoItem {
     private final String name;
     private final boolean completed;
 
-    public TodoItem(String name) {
+    public TodoItem(String name, boolean completed) {
         id = UUID.randomUUID();
         this.name = name;
-        completed = false;
+        this.completed = completed;
     }
 }

@@ -18,11 +18,6 @@ public class TodoItemsController implements TodosApi {
     private final TodoItemsMapper todoItemsMapper;
 
     @Override
-    public ResponseEntity<List<TodoItemDto>> getTodoItems() {
-        return ResponseEntity.ok().body(List.of());
-    }
-
-    @Override
     public ResponseEntity<TodoItemDto> createTodoItem(TodoItemDto todoItemToCreate) {
         CreateTodoItemCommand createTodoItemCommand = todoItemsMapper.mapTodoItemDtoToCreateCommand(todoItemToCreate);
 
@@ -31,5 +26,10 @@ public class TodoItemsController implements TodosApi {
         TodoItemDto createdTodoItemDto = todoItemsMapper.mapTodoItemModelToDto(createdTodoItem);
 
         return ResponseEntity.ok(createdTodoItemDto);
+    }
+
+    @Override
+    public ResponseEntity<List<TodoItemDto>> getTodoItems() {
+        return ResponseEntity.ok().body(List.of());
     }
 }

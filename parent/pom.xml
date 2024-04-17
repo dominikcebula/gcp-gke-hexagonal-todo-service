@@ -19,6 +19,7 @@
         <springfox.version>2.9.2</springfox.version>
         <swagger.version>2.1.22</swagger.version>
 
+        <lombok.version>1.18.30</lombok.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     </properties>
 
@@ -95,7 +96,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.13.0</version>
+                    <version>3.11.0</version>
                     <configuration>
                         <source>${maven.compiler.source}</source>
                         <target>${maven.compiler.target}</target>
