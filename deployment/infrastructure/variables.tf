@@ -13,4 +13,5 @@ variable "region" {
 variable "db_name" {
   type        = string
   description = "DB Name used by a service"
+  nullable    = false
 }
