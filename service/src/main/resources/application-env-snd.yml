@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    gcp:
+      project-id: todo-service-snd
+      firestore:
+        database-id: todo-service-snd-db

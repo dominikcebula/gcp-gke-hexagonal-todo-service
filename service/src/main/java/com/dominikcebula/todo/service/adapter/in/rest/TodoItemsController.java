@@ -4,6 +4,7 @@ import com.dominikcebula.todo.service.api.TodosApi;
 import com.dominikcebula.todo.service.application.domain.model.TodoItem;
 import com.dominikcebula.todo.service.application.port.in.CreateTodoItemCommand;
 import com.dominikcebula.todo.service.application.port.in.CreateTodoItemUseCase;
+import com.dominikcebula.todo.service.application.port.in.GetAllTodoItemsUseCase;
 import com.dominikcebula.todo.service.model.TodoItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 public class TodoItemsController implements TodosApi {
     private final CreateTodoItemUseCase createTodoItemUseCase;
+    private final GetAllTodoItemsUseCase getAllTodoItemsUseCase;
     private final TodoItemsMapper todoItemsMapper;
 
     @Override
@@ -30,6 +32,10 @@ public class TodoItemsController implements TodosApi {
 
     @Override
     public ResponseEntity<List<TodoItemDto>> getTodoItems() {
-        return ResponseEntity.ok().body(List.of());
+        List<TodoItem> todoItems = getAllTodoItemsUseCase.getAllTodoItems();
+
+        List<TodoItemDto> todoItemDtos = todoItemsMapper.mapTodoItemsModelToDtos(todoItems);
+
+        return ResponseEntity.ok().body(todoItemDtos);
     }
 }

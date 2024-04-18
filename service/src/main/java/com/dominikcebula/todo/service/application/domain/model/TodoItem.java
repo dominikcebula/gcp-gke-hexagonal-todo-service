@@ -10,12 +10,19 @@ import java.util.UUID;
 @EqualsAndHashCode
 @ToString
 public class TodoItem {
-    private final UUID id;
+    private final String id;
     private final String name;
-    private final boolean completed;
+    private final Boolean completed;
+
+    @SuppressWarnings("unused")
+    TodoItem() {
+        id = null;
+        name = null;
+        completed = null;
+    }
 
     public TodoItem(String name, boolean completed) {
-        id = UUID.randomUUID();
+        id = UUID.randomUUID().toString();
         this.name = name;
         this.completed = completed;
     }
