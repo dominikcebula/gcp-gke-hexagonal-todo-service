@@ -2,11 +2,13 @@ package com.dominikcebula.todo.service.adapter.out.db;
 
 import com.dominikcebula.todo.service.application.domain.model.TodoItem;
 import com.dominikcebula.todo.service.application.port.out.TodoItemsRepository;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
+@Profile("test")
 public class InMemoryTodoItemsRepository implements TodoItemsRepository {
     @Override
     public void save(TodoItem todoItem) {
