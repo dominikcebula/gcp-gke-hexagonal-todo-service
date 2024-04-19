@@ -85,6 +85,8 @@
                             <apiPackage>com.dominikcebula.todo.service.client.api</apiPackage>
                             <modelPackage>com.dominikcebula.todo.service.client.model</modelPackage>
                             <invokerPackage>com.dominikcebula.todo.service.client</invokerPackage>
+                            <generateApiTests>false</generateApiTests>
+                            <generateModelTests>false</generateModelTests>
                         </configuration>
                     </execution>
                 </executions>

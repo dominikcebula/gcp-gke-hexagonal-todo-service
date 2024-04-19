@@ -19,7 +19,11 @@ public class FirestoreTodoItemsRepository implements TodoItemsRepository {
 
     @Override
     public void save(TodoItem todoItem) {
-        getTodosCollection().document(todoItem.getId().toString()).set(todoItem);
+        try {
+            getTodosCollection().document(todoItem.getId().toString()).set(todoItem).get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RepositoryException("Error occurred while storing todo item.", e);
+        }
     }
 
     @Override
@@ -29,7 +33,7 @@ public class FirestoreTodoItemsRepository implements TodoItemsRepository {
                     .map(document -> document.toObject(TodoItem.class))
                     .collect(Collectors.toList());
         } catch (InterruptedException | ExecutionException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Error occurred while fetching all todo items from db.", e);
         }
     }
 
