@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 @Profile("test")
@@ -18,5 +19,10 @@ public class InMemoryTodoItemsRepository implements TodoItemsRepository {
     @Override
     public List<TodoItem> getAll() {
         return List.of();
+    }
+
+    @Override
+    public void deleteById(UUID todoId) {
+
     }
 }

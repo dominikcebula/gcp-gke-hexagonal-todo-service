@@ -94,8 +94,6 @@ paths:
       responses:
         '204':
           description: Todo item was deleted
-        '404':
-          description: Todo item did not exist
 components:
   schemas:
     TodoItem:

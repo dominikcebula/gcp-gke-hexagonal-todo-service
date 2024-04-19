@@ -4,6 +4,7 @@ import com.dominikcebula.todo.service.api.TodosApi;
 import com.dominikcebula.todo.service.application.domain.model.TodoItem;
 import com.dominikcebula.todo.service.application.port.in.CreateTodoItemCommand;
 import com.dominikcebula.todo.service.application.port.in.CreateTodoItemUseCase;
+import com.dominikcebula.todo.service.application.port.in.DeleteTodoItemUseCase;
 import com.dominikcebula.todo.service.application.port.in.GetAllTodoItemsUseCase;
 import com.dominikcebula.todo.service.model.TodoItemDto;
 import lombok.RequiredArgsConstructor;
@@ -11,12 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
 public class TodoItemsController implements TodosApi {
     private final CreateTodoItemUseCase createTodoItemUseCase;
     private final GetAllTodoItemsUseCase getAllTodoItemsUseCase;
+    private final DeleteTodoItemUseCase deleteTodoItemUseCase;
     private final TodoItemsMapper todoItemsMapper;
 
     @Override
@@ -37,5 +40,12 @@ public class TodoItemsController implements TodosApi {
         List<TodoItemDto> todoItemDtos = todoItemsMapper.mapTodoItemsModelToDtos(todoItems);
 
         return ResponseEntity.ok().body(todoItemDtos);
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteTodoItemById(UUID todoId) {
+        deleteTodoItemUseCase.deleteTodoItem(todoId);
+
+        return ResponseEntity.noContent().build();
     }
 }

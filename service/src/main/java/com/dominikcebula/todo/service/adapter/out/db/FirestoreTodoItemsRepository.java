@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,15 @@ public class FirestoreTodoItemsRepository implements TodoItemsRepository {
                     .collect(Collectors.toList());
         } catch (InterruptedException | ExecutionException e) {
             throw new RepositoryException("Error occurred while fetching all todo items from db.", e);
+        }
+    }
+
+    @Override
+    public void deleteById(UUID todoId) {
+        try {
+            getTodosCollection().document(todoId.toString()).delete().get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RepositoryException("Error occurred while deleting todo item from db with id " + todoId, e);
         }
     }
 

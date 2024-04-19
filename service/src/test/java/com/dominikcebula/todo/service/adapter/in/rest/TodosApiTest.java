@@ -2,6 +2,7 @@ package com.dominikcebula.todo.service.adapter.in.rest;
 
 import com.dominikcebula.todo.service.client.ApiClient;
 import com.dominikcebula.todo.service.client.ApiException;
+import com.dominikcebula.todo.service.client.ApiResponse;
 import com.dominikcebula.todo.service.client.Configuration;
 import com.dominikcebula.todo.service.client.api.DefaultApi;
 import com.dominikcebula.todo.service.client.model.TodoItemDto;
@@ -9,9 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -41,13 +44,12 @@ class TodosApiTest {
 
         // when
         TodoItemDto createdTodoItem = apiClient.createTodoItem(todoItemDto);
-        List<TodoItemDto> allTodoItems = apiClient.getTodoItems();
 
         // then
         assertIdIsNotBlank(createdTodoItem);
         assertNameValid(createdTodoItem, todoItemName);
         assertCompletedStateValid(createdTodoItem, todoItemCompletedState);
-        assertItemSaved(allTodoItems, createdTodoItem);
+        assertItemWasCreated(createdTodoItem);
     }
 
     @Test
@@ -57,6 +59,39 @@ class TodosApiTest {
 
         // then
         assertThat(allTodoItems).isNotNull();
+    }
+
+    @Test
+    void shouldGetNoContentResponseWhenDeletingNonExistingItem() throws ApiException {
+        // when
+        ApiResponse<Void> apiResponse = apiClient.deleteTodoItemByIdWithHttpInfo(UUID.randomUUID());
+
+        // then
+        assertThat(apiResponse.getStatusCode())
+                .isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    void shouldGetNoContentResponseWhenDeletingExistingItem() throws ApiException {
+        // given item definition
+        final String todoItemName = "TodoItem01";
+        final boolean todoItemCompletedState = true;
+        final TodoItemDto todoItemDto = new TodoItemDto()
+                .name(todoItemName)
+                .completed(todoItemCompletedState);
+
+        // and given created item
+        TodoItemDto createdTodoItem = apiClient.createTodoItem(todoItemDto);
+        assertIdIsNotBlank(createdTodoItem);
+        assertItemWasCreated(createdTodoItem);
+
+        // when item is deleted
+        ApiResponse<Void> apiResponse = apiClient.deleteTodoItemByIdWithHttpInfo(createdTodoItem.getId());
+
+        // then verify item does not exist
+        assertThat(apiResponse.getStatusCode())
+                .isEqualTo(HttpStatus.NO_CONTENT.value());
+        assertItemWasRemoved(createdTodoItem);
     }
 
     private void assertIdIsNotBlank(TodoItemDto createdTodoItem) {
@@ -77,9 +112,26 @@ class TodosApiTest {
                 .isEqualTo(todoItemCompletedState);
     }
 
-    private void assertItemSaved(List<TodoItemDto> allTodoItems, TodoItemDto createdTodoItem) {
+    private void assertItemWasCreated(TodoItemDto createdTodoItem) throws ApiException {
+        List<TodoItemDto> todoItems = apiClient.getTodoItems();
+
+        assertItemExists(todoItems, createdTodoItem);
+    }
+
+    private void assertItemExists(List<TodoItemDto> allTodoItems, TodoItemDto createdTodoItem) {
         assertThat(allTodoItems)
                 .contains(createdTodoItem);
+    }
+
+    private void assertItemWasRemoved(TodoItemDto createdTodoItem) throws ApiException {
+        List<TodoItemDto> todoItems = apiClient.getTodoItems();
+
+        assertItemDoesNotExists(todoItems, createdTodoItem);
+    }
+
+    private void assertItemDoesNotExists(List<TodoItemDto> allTodoItems, TodoItemDto createdTodoItem) {
+        assertThat(allTodoItems)
+                .doesNotContain(createdTodoItem);
     }
 
     private DefaultApi createApiClient() {
