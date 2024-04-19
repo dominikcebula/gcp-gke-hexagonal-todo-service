@@ -7,7 +7,7 @@ info:
 paths:
   /todos:
     get:
-      summary: List all todo items
+      summary: Get all todo items
       operationId: getTodoItems
       responses:
         '200':
