@@ -1,9 +1,3 @@
-variable "env_id" {
-  type        = string
-  description = "The environment for the infrastructure (ci, snd, dev, cert, prod)"
-  nullable    = false
-}
-
 variable "region" {
   type        = string
   description = "GCP Region to hold infrastructure components"

@@ -8,8 +8,9 @@ terraform {
 }
 
 locals {
-  project_id = "todo-service-${var.env_id}"
-  db_name    = "todo-service-${var.env_id}-db"
+  env_id     = terraform.workspace
+  project_id = "todo-service-${local.env_id}"
+  db_name    = "todo-service-${local.env_id}-db"
 }
 
 provider "google" {
