@@ -33,6 +33,69 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TodoItem"
+  /todos/{todoId}:
+    get:
+      summary: Get todo item by id
+      operationId: getTodoItemById
+      parameters:
+        - name: todoId
+          in: path
+          description: Todo item id to retrieve
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Todo item matching id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoItem"
+        '404':
+          description: Todo item not found
+    put:
+      summary: Update todo item by id
+      operationId: updateTodoItemById
+      parameters:
+        - name: todoId
+          in: path
+          description: Todo item id to update
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Todo item content which should be used to update existing todo item
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoItem"
+      responses:
+        '200':
+          description: Updated todo item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoItem"
+        '404':
+          description: Todo item not found
+    delete:
+      summary: Delete todo item by id
+      operationId: deleteTodoItemById
+      parameters:
+        - name: todoId
+          in: path
+          description: Todo item id to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Todo item was deleted
+        '404':
+          description: Todo item did not exist
 components:
   schemas:
     TodoItem:
