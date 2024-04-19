@@ -1,17 +1,18 @@
-variable "project_id" {
+variable "env_id" {
   type        = string
-  description = "GCP Project ID that holds infrastructure components"
+  description = "The environment for the infrastructure (ci, snd, dev, cert, prod)"
   nullable    = false
 }
 
 variable "region" {
   type        = string
   description = "GCP Region to hold infrastructure components"
+  default = "europe-central2"
   nullable    = false
 }
 
-variable "db_name" {
+variable "billing_account" {
   type        = string
-  description = "DB Name used by a service"
+  description = "Billing account used for project and services within a project"
   nullable    = false
 }

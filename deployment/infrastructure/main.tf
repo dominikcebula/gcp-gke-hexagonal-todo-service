@@ -7,7 +7,12 @@ terraform {
   }
 }
 
+locals {
+  project_id = "todo-service-${var.env_id}"
+  db_name    = "todo-service-${var.env_id}-db"
+}
+
 provider "google" {
-  project = var.project_id
+  project = local.project_id
   region  = var.region
 }
