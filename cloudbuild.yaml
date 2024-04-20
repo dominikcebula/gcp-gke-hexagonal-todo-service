@@ -1,4 +1,9 @@
 steps:
-  - name: maven:3.9-eclipse-temurin-21
+  - id: build-and-run-tests
+    name: maven:3.9-eclipse-temurin-21
     entrypoint: mvn
     args: [ 'clean', 'install' ]
+  - id: build-docker-container
+    name: gcr.io/cloud-builders/docker
+    args: [ 'build', '-t', 'europe-central2-docker.pkg.dev/todo-service-ci/docker-images-ci/todo-service', 'service' ]
+images: [ 'europe-central2-docker.pkg.dev/todo-service-ci/docker-images-ci/todo-service' ]
