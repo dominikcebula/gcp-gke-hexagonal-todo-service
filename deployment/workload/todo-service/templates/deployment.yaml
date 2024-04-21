@@ -23,6 +23,7 @@ spec:
           {{- toYaml . | nindent 8 }}
           {{- end }}
     spec:
+      serviceAccountName: {{ include "todo-service.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
