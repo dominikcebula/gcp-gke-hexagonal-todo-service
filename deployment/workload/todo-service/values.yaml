@@ -1,0 +1,49 @@
+replicaCount: 1
+
+image:
+  repository: europe-central2-docker.pkg.dev/todo-service-ci/docker-images-ci/todo-service
+  tag: latest
+  pullPolicy: Always
+
+container:
+  port:
+    application: 8080
+    management: 8081
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  paths:
+    - path: /
+      pathType: ImplementationSpecific
+
+resources:
+  limits:
+    cpu: 250m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+livenessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8081
+  initialDelaySeconds: 3
+  periodSeconds: 5
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8081
+  initialDelaySeconds: 3
+  periodSeconds: 5
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
