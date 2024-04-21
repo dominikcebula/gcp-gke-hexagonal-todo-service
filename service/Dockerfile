@@ -11,6 +11,8 @@ VOLUME /tmp
 USER app
 WORKDIR /opt/app
 
+ENV JAVA_OPTS="-XX:MinRAMPercentage=80 -XX:MaxRAMPercentage=80 -XX:InitialRAMPercentage=80 -XshowSettings:vm"
+
 COPY target/todo-service*.jar .
 
 ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar *.jar ${0} ${@}"]
