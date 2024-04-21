@@ -1,42 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { include "todo-service.fullname" . } }
+  name: {{ include "todo-service.fullname" . }}
   labels:
-    { { - include "todo-service.labels" . | nindent 4 } }
+    {{- include "todo-service.labels" . | nindent 4 }}
 spec:
-  { { - if not .Values.autoscaling.enabled } }
-  replicas: { { .Values.replicaCount } }
-  { { - end } }
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
-      { { - include "todo-service.selectorLabels" . | nindent 6 } }
+      {{- include "todo-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      { { - with .Values.podAnnotations } }
+      {{- with .Values.podAnnotations }}
       annotations:
-        { { - toYaml . | nindent 8 } }
-      { { - end } }
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       labels:
-        { { - include "todo-service.labels" . | nindent 8 } }
-          { { - with .Values.podLabels } }
-          { { - toYaml . | nindent 8 } }
-          { { - end } }
+        {{- include "todo-service.labels" . | nindent 8 }}
+          {{- with .Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
     spec:
       containers:
-        - name: { { .Chart.Name } }
+        - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: { { .Values.image.pullPolicy } }
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: { { .Values.container.port.application } }
+              containerPort: {{ .Values.container.port.application }}
               protocol: TCP
             - name: http-management
-              containerPort: { { .Values.container.port.management } }
+              containerPort: {{ .Values.container.port.management }}
               protocol: TCP
           livenessProbe:
-            { { - toYaml .Values.livenessProbe | nindent 12 } }
-          readinessProbe:
-            { { - toYaml .Values.readinessProbe | nindent 12 } }
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
           resources:
-            { { - toYaml .Values.resources | nindent 12 } }
+            {{- toYaml .Values.resources | nindent 12 }}
