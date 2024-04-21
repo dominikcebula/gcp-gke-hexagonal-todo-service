@@ -12,4 +12,11 @@ if [[ "${env_id}" != @(ci|snd|dev|cert|prod) ]]; then
   exit 1
 fi
 
-helm install todo-service -f "values.yaml" -f "environments/values.env-${env_id}.yaml" .
+if helm status todo-service > /dev/null 2>&1
+then
+  operation=upgrade
+else
+  operation=install
+fi
+
+helm ${operation} todo-service -f "values.yaml" -f "environments/values.env-${env_id}.yaml" .
