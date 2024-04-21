@@ -4,6 +4,8 @@ metadata:
   name: {{ include "todo-service.fullname" . }}
   labels:
     {{- include "todo-service.labels" . | nindent 4 }}
+  annotations:
+    cloud.google.com/backend-config: '{"ports": {"80":"{{ include "todo-service.fullname" . }}-backend-config"}}'
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -11,5 +13,9 @@ spec:
       targetPort: {{ .Values.container.port.application }}
       protocol: TCP
       name: http
+    - port: 8081
+      targetPort: 8081
+      protocol: TCP
+      name: http-management
   selector:
     {{- include "todo-service.selectorLabels" . | nindent 4 }}

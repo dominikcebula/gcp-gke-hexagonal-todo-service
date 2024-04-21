@@ -40,5 +40,7 @@ spec:
               value: env-{{ .Values.envId }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

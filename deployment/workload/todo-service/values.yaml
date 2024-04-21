@@ -37,6 +37,12 @@ livenessProbe:
     port: 8081
   initialDelaySeconds: 120
   periodSeconds: 5
+readinessProbe:
+  httpGet:
+    path: /actuator/health
+    port: 8081
+  initialDelaySeconds: 120
+  periodSeconds: 5
 
 autoscaling:
   enabled: false
