@@ -1,16 +1,24 @@
 resource "google_project_iam_member" "cloud_build_service_account_iam_policy" {
   project = local.project_id
   role    = "roles/firebase.admin"
-  member = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
-  count = local.env_id == "ci" ? 1 : 0
+  member  = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
+  count   = local.env_id == "ci" ? 1 : 0
 }
 
 data "google_secret_manager_secret" "github-token-secret" {
-  secret_id = "github-token-secret"
+  secret_id = "todo-service-github-connection-github-oauthtoken"
 }
 
 data "google_secret_manager_secret_version" "github-token-secret-version" {
   secret = data.google_secret_manager_secret.github-token-secret.id
+}
+
+data "google_secret_manager_secret" "github-app-installation-id" {
+  secret_id = "todo-service-github-connection-app-installation-id"
+}
+
+data "google_secret_manager_secret_version" "github-app-installation-id-version" {
+  secret = data.google_secret_manager_secret.github-app-installation-id.id
 }
 
 data "google_iam_policy" "p4sa-secretAccessor" {
@@ -30,7 +38,7 @@ resource "google_cloudbuildv2_connection" "todo-service-github-connection" {
   name     = "todo-service-github-connection"
 
   github_config {
-    app_installation_id = 123123
+    app_installation_id = tonumber(data.google_secret_manager_secret_version.github-app-installation-id-version.secret_data)
     authorizer_credential {
       oauth_token_secret_version = data.google_secret_manager_secret_version.github-token-secret-version.id
     }
