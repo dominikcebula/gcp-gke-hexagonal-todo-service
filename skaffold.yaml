@@ -1,0 +1,10 @@
+apiVersion: skaffold/v4beta7
+kind: Config
+manifests:
+  helm:
+    releases:
+      - name: todo-service
+        chartPath: deployment/workload
+        valuesFiles:
+          - deployment/workload/values.yaml
+          - deployment/workload/environments/values.env-ci.yaml
