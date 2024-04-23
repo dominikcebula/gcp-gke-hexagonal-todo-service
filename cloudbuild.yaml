@@ -5,5 +5,17 @@ steps:
     args: [ 'clean', 'install' ]
   - id: build-docker-container
     name: gcr.io/cloud-builders/docker
-    args: [ 'build', '-t', 'europe-central2-docker.pkg.dev/todo-service-ci/docker-images-ci/todo-service', 'service' ]
+    args:
+      - build
+      - -t
+      - europe-central2-docker.pkg.dev/todo-service-ci/docker-images-ci/todo-service
+      - service
+  - id: create-cloud-deploy-release
+    name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        gcloud deploy releases create todo-service-`date +%Y%m%d%H%M%S` --project=${PROJECT_ID} --region=europe-central2 --delivery-pipeline=todo-service-ci-pipeline
+
 images: [ 'europe-central2-docker.pkg.dev/todo-service-ci/docker-images-ci/todo-service' ]

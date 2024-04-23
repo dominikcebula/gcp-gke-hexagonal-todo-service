@@ -1,6 +1,20 @@
-resource "google_project_iam_member" "cloud_build_service_account_iam_policy" {
+resource "google_project_iam_member" "cloud_build_service_account_iam_policy_firebase" {
   project = local.project_id
   role    = "roles/firebase.admin"
+  member  = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
+  count   = local.env_id == "ci" ? 1 : 0
+}
+
+resource "google_project_iam_member" "cloud_build_service_account_iam_policy_cloud_deploy" {
+  project = local.project_id
+  role    = "roles/clouddeploy.releaser"
+  member  = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
+  count   = local.env_id == "ci" ? 1 : 0
+}
+
+resource "google_project_iam_member" "cloud_build_service_account_iam_policy_service_account_user" {
+  project = local.project_id
+  role    = "roles/iam.serviceAccountUser"
   member  = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
   count   = local.env_id == "ci" ? 1 : 0
 }
