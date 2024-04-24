@@ -1,0 +1,33 @@
+@startuml
+
+[api-client] -up-> [api] : uses
+[api-docs] -up-> [api] : uses
+[api-server-stubs] -up-> [api] : uses
+[service] .left.|> [api-server-stubs] : implements
+[deployment] --> [service] : deploys
+
+note left of [api]
+    Contains OpenAPI specification
+end note
+
+note bottom of [api-client]
+    Generated API Client for Java
+end note
+
+note bottom of [api-docs]
+    Generated API Documentation
+end note
+
+note bottom of [api-server-stubs]
+    Generated API Server Stubs for Java
+end note
+
+note bottom of [service]
+    Web, Business (Domain), Storage layer implementation
+end note
+
+note right of [deployment]
+    Terraform and Helm code for deployment automation
+end note
+
+@enduml
