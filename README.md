@@ -30,7 +30,7 @@ logic.
 
 <img src="https://www.arhohuttunen.com/media/post/hexagonal-architecture/hexagonal-architecture-external-dependencies.svg" width=600/>
 <sub>Image Source: Hexagonal Architecture Explained - https://www.arhohuttunen.com/hexagonal-architecture/</sub>
-
+<p/>
 
 By separating concerns and dependencies, Hexagonal Architecture enables meaningful business use case testing through the
 implementation of "ports" or interfaces. The ports define the contract between the core application logic and its
@@ -40,6 +40,7 @@ testing of business logic in isolation.
 
 <img src="https://www.arhohuttunen.com/media/post/hexagonal-architecture/hexagonal-architecture-unit-test.svg" width="600"/>
 <sub>Image Source: Hexagonal Architecture Explained - https://www.arhohuttunen.com/hexagonal-architecture/</sub>
+<p/>
 
 For more information on Hexagonal (Ports & Adapters) Architecture please see [Hexagonal Architecture Explained
 ](https://www.arhohuttunen.com/hexagonal-architecture/).
