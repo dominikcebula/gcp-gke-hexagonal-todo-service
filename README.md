@@ -31,6 +31,7 @@ logic.
 <img src="https://www.arhohuttunen.com/media/post/hexagonal-architecture/hexagonal-architecture-external-dependencies.svg" width=600/>
 <sub>Image Source: Hexagonal Architecture Explained - https://www.arhohuttunen.com/hexagonal-architecture/</sub>
 
+
 By separating concerns and dependencies, Hexagonal Architecture enables meaningful business use case testing through the
 implementation of "ports" or interfaces. The ports define the contract between the core application logic and its
 external dependencies, allowing for easy substitution of implementations during testing. For example, in unit tests,
