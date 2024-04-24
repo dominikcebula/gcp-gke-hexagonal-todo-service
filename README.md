@@ -17,7 +17,7 @@ This repository contains a demo code sample intended to use the following concep
 
 # Modules structure
 
-<img src="img/modules.svg" width="400"/>
+<img src="img/modules.svg"/>
 
 # Hexagonal (Ports & Adapters) Architecture
 
@@ -28,7 +28,7 @@ interfaces, or third-party services. The purpose of Hexagonal Architecture is to
 by promoting separation of concerns and reducing the impact of changes in external dependencies on the core application
 logic.
 
-<img src="https://www.arhohuttunen.com/media/post/hexagonal-architecture/hexagonal-architecture-external-dependencies.svg" width=400/>
+<img src="https://www.arhohuttunen.com/media/post/hexagonal-architecture/hexagonal-architecture-external-dependencies.svg" width=600/>
 
 By separating concerns and dependencies, Hexagonal Architecture enables meaningful business use case testing through the
 implementation of "ports" or interfaces. The ports define the contract between the core application logic and its
@@ -36,7 +36,7 @@ external dependencies, allowing for easy substitution of implementations during 
 mock implementations of these ports can be used to simulate interactions with external systems, enabling meaningful
 testing of business logic in isolation.
 
-<img src="https://www.arhohuttunen.com/media/post/hexagonal-architecture/hexagonal-architecture-unit-test.svg" width="400"/>
+<img src="https://www.arhohuttunen.com/media/post/hexagonal-architecture/hexagonal-architecture-unit-test.svg" width="600"/>
 
 For more information on Hexagonal (Ports & Adapters) Architecture please see [Hexagonal Architecture Explained
 ](https://www.arhohuttunen.com/hexagonal-architecture/).
