@@ -19,9 +19,14 @@ This repository contains a demo code sample intended to use the following concep
 
 <img src="img/modules.svg"/>
 
+# API
+
+API for the service is described under [api.yaml](api%2Fsrc%2Fmain%2Fresources%2Fapi.yaml).
+
 # Hexagonal (Ports & Adapters) Architecture
 
-Hexagonal architecture, also known as Ports and Adapters architecture, is a design pattern that emphasizes decoupling
+This project uses Hexagonal architecture, also known as Ports and Adapters architecture. Hexagonal architecture is a
+design pattern that emphasizes decoupling
 the core business logic of an application from its external dependencies. In this architecture, the core logic is
 surrounded by ports, that handle communication with external systems such as databases, user
 interfaces, or third-party services. The purpose of Hexagonal Architecture is to improve maintainability and testability
@@ -55,19 +60,75 @@ Open API, developers can describe the functionality, data models, and endpoints 
 format, allowing integration and collaboration across teams. API-first approach leverages tools like Open
 API and Swagger.
 
+# CI/CD Pipeline
+
+Project uses Cloud Build and Cloud Deploy for C/CD Pipeline. Final artifact as Docker Image is stored in Artifact
+Registry and deployed to GKE.
+
+CI pipeline is described in [cloudbuild.yaml](cloudbuild.yaml) file.
+Cloud Build is created using Terraform under [cloud_build.tf](deployment%2Finfrastructure%2Fcloud_build.tf).
+Docker Images are kept in Artifact Registry created
+under [docker_repository.tf](deployment%2Finfrastructure%2Fdocker_repository.tf).
+
+CD pipeline is described
+in [cloud_deploy.tf](deployment%2Finfrastructure%2Fcloud_deploy.tf) and [skaffold.yaml](skaffold.yaml).
+Kubernetes objects are rendered using Helm and Helm Chart is available under [workload](deployment%2Fworkload) folder.
+
 # Build
 
-TBD
+Project is build using Maven:
 
-# Run
+```shell
+mvn clean install
+```
+
+Docker Image can be created using following commands from `service` folder level:
+
+```shell
+docker buildx build -t todo-service .
+```
+
+Once gcloud cli is configured, you can also trigger build in cloud using below command:
+
+```shell
+gcloud builds submit
+```
+
+When running build in cloud, Docker Image will be stored in Artifact Registry.
+
+# Run locally
 
 ## Using Java
 
-TBD
+```shell
+java -jar target/todo-service-*.jar
+```
 
 ## Using Docker
 
-TBD
+Since service accesses Firestore in GCP Cloud you need to make sure that when executed as Docker Container, application
+has access to [Application Default Credentials](https://cloud.google.com/docs/authentication/provide-credentials-adc).
+
+[Application Default Credentials](https://cloud.google.com/docs/authentication/provide-credentials-adc) will be stored
+under `~/.config/gcloud/application_default_credentials.json`. Docker can access it using Docker volume.
+
+Below are the commands that will setup Docker volume and credentials on volume:
+
+```shell
+docker volume create gcp_credentials
+sudo mkdir /var/lib/docker/volumes/gcp_credentials/_data/gcloud
+sudo cp ~/.config/gcloud/application_default_credentials.json /var/lib/docker/volumes/gcp_credentials/_data/gcloud
+sudo chmod -R 0700 /var/lib/docker/volumes/gcp_credentials/_data/gcloud
+sudo chown -R 1001:1001 /var/lib/docker/volumes/gcp_credentials/_data/gcloud
+```
+
+Having volume and credentials setup done, you can run container
+with [Application Default Credentials](https://cloud.google.com/docs/authentication/provide-credentials-adc) available
+for the application inside the container.
+
+```shell
+docker run --rm -e GOOGLE_APPLICATION_CREDENTIALS=/opt/app/.config/gcloud/application_default_credentials.json -e SPRING_PROFILES_ACTIVE=env-snd -v gcp_credentials:/opt/app/.config -p 8080:8080 todo-service
+```
 
 # Deployment
 
