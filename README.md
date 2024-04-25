@@ -134,6 +134,12 @@ docker run --rm -e GOOGLE_APPLICATION_CREDENTIALS=/opt/app/.config/gcloud/applic
 
 TBD
 
+# Ideas
+
+* Introduce Performance Tests with JMeter
+* Introduce Port for Events and Pub/Sub
+* Automatic and manual builds triggers in cloud build
+
 # References
 
 Hexagonal Architecture Explained. Accessed April 24, 2024. https://www.arhohuttunen.com/hexagonal-architecture/
