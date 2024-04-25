@@ -27,8 +27,13 @@ paths:
             schema:
               $ref: "#/components/schemas/TodoItem"
       responses:
-        '200':
+        '201':
           description: Created todo item
+          headers:
+            Location:
+              description: Location of created todo item
+              schema:
+                type: string
           content:
             application/json:
               schema:

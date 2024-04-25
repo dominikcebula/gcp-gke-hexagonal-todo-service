@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +32,8 @@ public class TodoItemsController implements TodosApi {
 
         TodoItemDto createdTodoItemDto = todoItemsMapper.mapTodoItemModelToDto(createdTodoItem);
 
-        return ResponseEntity.ok(createdTodoItemDto);
+        return ResponseEntity.created(URI.create("/todos/" + createdTodoItemDto.getId()))
+                .body(createdTodoItemDto);
     }
 
     @Override
@@ -54,6 +56,11 @@ public class TodoItemsController implements TodosApi {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @Override
+    public ResponseEntity<TodoItemDto> updateTodoItemById(UUID todoId, TodoItemDto todoItemDto) {
+        return TodosApi.super.updateTodoItemById(todoId, todoItemDto);
     }
 
     @Override

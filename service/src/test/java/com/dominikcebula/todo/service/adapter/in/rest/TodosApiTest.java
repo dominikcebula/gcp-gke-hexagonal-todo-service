@@ -6,6 +6,7 @@ import com.dominikcebula.todo.service.client.ApiResponse;
 import com.dominikcebula.todo.service.client.Configuration;
 import com.dominikcebula.todo.service.client.api.DefaultApi;
 import com.dominikcebula.todo.service.client.model.TodoItemDto;
+import jakarta.ws.rs.client.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,12 +50,14 @@ class TodosApiTest {
         TodoItemDto createdTodoItem = apiResponse.getData();
 
         // then
-        assertThat(apiResponse.getStatusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(apiResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED.value());
+        assertLocationHeaderReturned(apiResponse, createdTodoItem);
         assertThat(createdTodoItem).isNotNull();
         assertIdIsNotBlank(createdTodoItem);
         assertNameValid(createdTodoItem, todoItemName);
         assertCompletedStateValid(createdTodoItem, todoItemCompletedState);
         assertItemWasCreated(createdTodoItem);
+        assertItemWasCreatedByLocationHeader(apiResponse, createdTodoItem);
     }
 
     @Test
@@ -129,6 +133,10 @@ class TodosApiTest {
         return apiClient.createTodoItem(todoItemDto);
     }
 
+    private void assertLocationHeaderReturned(ApiResponse<TodoItemDto> apiResponse, TodoItemDto createdTodoItem) {
+        assertThat(apiResponse.getHeaders()).containsEntry("Location", List.of("/todos/" + createdTodoItem.getId()));
+    }
+
     private void assertIdIsNotBlank(TodoItemDto createdTodoItem) {
         assertThat(createdTodoItem.getId()).isNotNull();
         assertThat(createdTodoItem.getId().toString()).isNotBlank();
@@ -152,6 +160,18 @@ class TodosApiTest {
         assertItemExists(todoItems, createdTodoItem);
     }
 
+    private void assertItemWasCreatedByLocationHeader(ApiResponse<TodoItemDto> apiResponse, TodoItemDto createdTodoItem) {
+        Client httpClient = apiClient.getApiClient().getHttpClient();
+
+        String location = apiResponse.getHeaders().get("Location").getFirst();
+
+        URI uri = URI.create(getServerUrl() + location);
+        TodoItemDto retrievedTodoItemDto = httpClient.target(uri).request().get(TodoItemDto.class);
+
+        assertThat(createdTodoItem)
+                .isEqualTo(retrievedTodoItemDto);
+    }
+
     private void assertItemExists(List<TodoItemDto> allTodoItems, TodoItemDto createdTodoItem) {
         assertThat(allTodoItems)
                 .contains(createdTodoItem);
@@ -170,7 +190,11 @@ class TodosApiTest {
 
     private DefaultApi createApiClient() {
         ApiClient defaultClient = Configuration.getDefaultApiClient();
-        defaultClient.setBasePath("http://localhost:" + serverPort);
+        defaultClient.setBasePath(getServerUrl());
         return new DefaultApi(defaultClient);
+    }
+
+    private String getServerUrl() {
+        return "http://localhost:" + serverPort;
     }
 }
