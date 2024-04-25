@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class CreateTodoItemService implements CreateTodoItemUseCase {
-    private final TodoItemsRepository todoItemsRepository;
+    private final TodoItemsRepository repository;
 
     @Override
     public TodoItem createTodoItem(CreateTodoItemCommand command) {
         TodoItem todoItem = new TodoItem(command.name(), command.completed());
 
-        todoItemsRepository.save(todoItem);
+        repository.save(todoItem);
 
         return todoItem;
     }

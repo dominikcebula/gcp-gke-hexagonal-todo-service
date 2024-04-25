@@ -13,12 +13,12 @@ import static com.dominikcebula.todo.service.application.port.in.DeleteTodoItemU
 @RequiredArgsConstructor
 @Service
 public class DeleteTodoItemService implements DeleteTodoItemUseCase {
-    private final TodoItemsRepository todoItemsRepository;
+    private final TodoItemsRepository repository;
 
     @Override
     public DeleteTodoItemUseCaseResult deleteTodoItem(UUID id) {
-        if (todoItemsRepository.exists(id)) {
-            todoItemsRepository.deleteById(id);
+        if (repository.exists(id)) {
+            repository.deleteById(id);
             return ITEM_DELETED;
         } else {
             return ITEM_DID_NOT_EXIST;

@@ -11,10 +11,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Service
 public class GetTodoItemByIdService implements GetTodoItemByIdUseCase {
-    private final TodoItemsRepository todoItemsRepository;
+    private final TodoItemsRepository repository;
 
     @Override
     public TodoItem getTodoItemById(UUID id) {
-        return todoItemsRepository.getById(id);
+        return repository.getById(id);
     }
 }

@@ -77,8 +77,14 @@ paths:
             schema:
               $ref: "#/components/schemas/TodoItem"
       responses:
+        '201':
+          description: Created todo item if todo item did not exist
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TodoItem"
         '200':
-          description: Updated todo item
+          description: Updated todo item if todo item did exist
           content:
             application/json:
               schema:

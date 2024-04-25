@@ -61,6 +61,59 @@ class TodosApiTest {
     }
 
     @Test
+    void shouldCreteTodoItemWhenUpdateExecutedAgainstNonExistingTodoItem() throws ApiException {
+        // given
+        final UUID todoItemId = UUID.randomUUID();
+        final String todoItemName = "TodoItem01";
+        final boolean todoItemCompletedState = true;
+
+        final TodoItemDto todoItemDto = new TodoItemDto()
+                .name(todoItemName)
+                .completed(todoItemCompletedState);
+
+        // when
+        ApiResponse<TodoItemDto> apiResponse = apiClient.updateTodoItemByIdWithHttpInfo(todoItemId, todoItemDto);
+        TodoItemDto createdTodoItem = apiResponse.getData();
+
+        // then
+        assertThat(apiResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED.value());
+        assertLocationHeaderReturned(apiResponse, createdTodoItem);
+        assertThat(createdTodoItem).isNotNull();
+        assertIdIsNotBlank(createdTodoItem);
+        assertThat(createdTodoItem.getId()).isEqualTo(todoItemId);
+        assertNameValid(createdTodoItem, todoItemName);
+        assertCompletedStateValid(createdTodoItem, todoItemCompletedState);
+        assertItemWasCreated(createdTodoItem);
+        assertItemWasCreatedByLocationHeader(apiResponse, createdTodoItem);
+    }
+
+    @Test
+    void shouldUpdateExistingTodoItemWhenUpdateExecutedAgainstExistingTodoItem() throws ApiException {
+        // given
+        TodoItemDto createdTodoItem = createdTodoItem();
+        UUID id = createdTodoItem.getId();
+
+        TodoItemDto updatedTodoItem = new TodoItemDto();
+        updatedTodoItem.setName("TodoItem02");
+        updatedTodoItem.setCompleted(false);
+
+        // when
+        ApiResponse<TodoItemDto> apiResponse = apiClient.updateTodoItemByIdWithHttpInfo(id, updatedTodoItem);
+        TodoItemDto retrievedUpdatedTodoItem = apiResponse.getData();
+
+        // then
+        assertThat(apiResponse.getStatusCode()).isEqualTo(HttpStatus.OK.value());
+        assertNoLocationHeaderReturned(apiResponse);
+        assertThat(retrievedUpdatedTodoItem).isNotNull();
+        assertIdIsNotBlank(retrievedUpdatedTodoItem);
+        assertThat(retrievedUpdatedTodoItem.getId()).isEqualTo(id);
+        assertNameValid(retrievedUpdatedTodoItem, updatedTodoItem.getName());
+        assertCompletedStateValid(retrievedUpdatedTodoItem, updatedTodoItem.getCompleted());
+        assertThat(retrievedUpdatedTodoItem.getName()).isNotEqualTo(createdTodoItem.getName());
+        assertThat(retrievedUpdatedTodoItem.getCompleted()).isNotEqualTo(createdTodoItem.getCompleted());
+    }
+
+    @Test
     void shouldGetAllTodoItems() throws ApiException {
         // when
         ApiResponse<List<TodoItemDto>> apiResponse = apiClient.getTodoItemsWithHttpInfo();
@@ -135,6 +188,10 @@ class TodosApiTest {
 
     private void assertLocationHeaderReturned(ApiResponse<TodoItemDto> apiResponse, TodoItemDto createdTodoItem) {
         assertThat(apiResponse.getHeaders()).containsEntry("Location", List.of("/todos/" + createdTodoItem.getId()));
+    }
+
+    private void assertNoLocationHeaderReturned(ApiResponse<TodoItemDto> apiResponse) {
+        assertThat(apiResponse.getHeaders()).doesNotContainKey("Location");
     }
 
     private void assertIdIsNotBlank(TodoItemDto createdTodoItem) {

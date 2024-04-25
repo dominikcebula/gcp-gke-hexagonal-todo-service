@@ -26,4 +26,14 @@ public class TodoItem {
         this.name = name;
         this.completed = completed;
     }
+
+    public TodoItem(UUID id, String name, Boolean completed) {
+        this.id = id.toString();
+        this.name = name;
+        this.completed = completed;
+    }
+
+    public UUID getUUID() {
+        return UUID.fromString(id);
+    }
 }
