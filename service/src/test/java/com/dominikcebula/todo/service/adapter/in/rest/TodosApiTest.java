@@ -115,13 +115,18 @@ class TodosApiTest {
 
     @Test
     void shouldGetAllTodoItems() throws ApiException {
+        // given
+        var atLeastOneCreatedTodoItem = createdTodoItem();
+
         // when
         ApiResponse<List<TodoItemDto>> apiResponse = apiClient.getTodoItemsWithHttpInfo();
         List<TodoItemDto> allTodoItems = apiResponse.getData();
 
         // then
         assertThat(apiResponse.getStatusCode()).isEqualTo(HttpStatus.OK.value());
-        assertThat(allTodoItems).isNotNull();
+        assertThat(allTodoItems)
+                .isNotEmpty()
+                .contains(atLeastOneCreatedTodoItem);
     }
 
     @Test
