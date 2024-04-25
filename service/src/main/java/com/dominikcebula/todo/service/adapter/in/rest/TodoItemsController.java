@@ -14,7 +14,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
+import static com.dominikcebula.todo.service.application.port.in.CreateOrUpdateTodoItemUseCase.CreateOrUpdateTodoItemCommand;
 import static com.dominikcebula.todo.service.application.port.in.CreateOrUpdateTodoItemUseCase.CreateOrUpdateTodoItemResultType.ITEM_CREATED;
+import static com.dominikcebula.todo.service.application.port.in.CreateTodoItemUseCase.CreateTodoItemCommand;
 import static com.dominikcebula.todo.service.application.port.in.DeleteTodoItemUseCase.DeleteTodoItemUseCaseResult.ITEM_DELETED;
 
 @RequiredArgsConstructor

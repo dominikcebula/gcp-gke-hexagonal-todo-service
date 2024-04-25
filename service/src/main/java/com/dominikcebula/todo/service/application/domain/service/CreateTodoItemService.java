@@ -1,7 +1,6 @@
 package com.dominikcebula.todo.service.application.domain.service;
 
 import com.dominikcebula.todo.service.application.domain.model.TodoItem;
-import com.dominikcebula.todo.service.application.port.in.CreateTodoItemCommand;
 import com.dominikcebula.todo.service.application.port.in.CreateTodoItemUseCase;
 import com.dominikcebula.todo.service.application.port.out.TodoItemsRepository;
 import lombok.RequiredArgsConstructor;

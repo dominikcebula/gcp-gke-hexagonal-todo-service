@@ -4,4 +4,7 @@ import com.dominikcebula.todo.service.application.domain.model.TodoItem;
 
 public interface CreateTodoItemUseCase {
     TodoItem createTodoItem(CreateTodoItemCommand command);
+
+    record CreateTodoItemCommand(String name, boolean completed) {
+    }
 }
