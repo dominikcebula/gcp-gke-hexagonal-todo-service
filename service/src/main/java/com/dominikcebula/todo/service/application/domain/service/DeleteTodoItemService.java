@@ -7,13 +7,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static com.dominikcebula.todo.service.application.port.in.DeleteTodoItemUseCase.DeleteTodoItemUseCaseResult.ITEM_DELETED;
+import static com.dominikcebula.todo.service.application.port.in.DeleteTodoItemUseCase.DeleteTodoItemUseCaseResult.ITEM_DID_NOT_EXIST;
+
 @RequiredArgsConstructor
 @Service
 public class DeleteTodoItemService implements DeleteTodoItemUseCase {
     private final TodoItemsRepository todoItemsRepository;
 
     @Override
-    public void deleteTodoItem(UUID todoId) {
-        todoItemsRepository.deleteById(todoId);
+    public DeleteTodoItemUseCaseResult deleteTodoItem(UUID id) {
+        if (todoItemsRepository.exists(id)) {
+            todoItemsRepository.deleteById(id);
+            return ITEM_DELETED;
+        } else {
+            return ITEM_DID_NOT_EXIST;
+        }
     }
 }

@@ -21,8 +21,9 @@ public class FirestoreTodoItemsRepository implements TodoItemsRepository {
     @Override
     public void save(TodoItem todoItem) {
         try {
-            getTodosCollection().document(todoItem.getId().toString()).set(todoItem).get();
+            getTodosCollection().document(todoItem.getId()).set(todoItem).get();
         } catch (InterruptedException | ExecutionException e) {
+            interruptCurrentThreadIfRequired(e);
             throw new RepositoryException("Error occurred while storing todo item.", e);
         }
     }
@@ -34,7 +35,27 @@ public class FirestoreTodoItemsRepository implements TodoItemsRepository {
                     .map(document -> document.toObject(TodoItem.class))
                     .collect(Collectors.toList());
         } catch (InterruptedException | ExecutionException e) {
+            interruptCurrentThreadIfRequired(e);
             throw new RepositoryException("Error occurred while fetching all todo items from db.", e);
+        }
+    }
+
+    @Override
+    public TodoItem getById(UUID id) {
+        try {
+            return getTodosCollection().document(id.toString()).get().get().toObject(TodoItem.class);
+        } catch (InterruptedException | ExecutionException e) {
+            interruptCurrentThreadIfRequired(e);
+            throw new RepositoryException(String.format("Error occurred while fetching todo item %s from db.", id), e);
+        }
+    }
+
+    public boolean exists(UUID id) {
+        try {
+            return getTodosCollection().document(id.toString()).get().get().exists();
+        } catch (InterruptedException | ExecutionException e) {
+            interruptCurrentThreadIfRequired(e);
+            throw new RepositoryException(String.format("Error occurred while check if todo item %s exists in db.", id), e);
         }
     }
 
@@ -43,11 +64,18 @@ public class FirestoreTodoItemsRepository implements TodoItemsRepository {
         try {
             getTodosCollection().document(todoId.toString()).delete().get();
         } catch (InterruptedException | ExecutionException e) {
+            interruptCurrentThreadIfRequired(e);
             throw new RepositoryException("Error occurred while deleting todo item from db with id " + todoId, e);
         }
     }
 
     private CollectionReference getTodosCollection() {
         return firestore.collection("todos");
+    }
+
+    private void interruptCurrentThreadIfRequired(Exception e) {
+        if (e instanceof InterruptedException) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

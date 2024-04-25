@@ -10,5 +10,9 @@ public interface TodoItemsRepository {
 
     List<TodoItem> getAll();
 
+    TodoItem getById(UUID id);
+
+    boolean exists(UUID id);
+
     void deleteById(UUID todoId);
 }

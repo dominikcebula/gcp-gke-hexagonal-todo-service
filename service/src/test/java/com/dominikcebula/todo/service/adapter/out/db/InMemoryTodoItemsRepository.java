@@ -22,6 +22,16 @@ public class InMemoryTodoItemsRepository implements TodoItemsRepository {
     }
 
     @Override
+    public TodoItem getById(UUID id) {
+        return null;
+    }
+
+    @Override
+    public boolean exists(UUID id) {
+        return false;
+    }
+
+    @Override
     public void deleteById(UUID todoId) {
 
     }
