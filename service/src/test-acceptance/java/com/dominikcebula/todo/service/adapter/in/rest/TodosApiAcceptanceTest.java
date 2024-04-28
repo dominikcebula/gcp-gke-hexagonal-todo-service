@@ -21,8 +21,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@TestPropertySource(properties = {"spring.cloud.gcp.firestore.enabled=true"})
-@ActiveProfiles({"test-acceptance", "env-ci"})
+@TestPropertySource(properties = {
+        "spring.cloud.gcp.firestore.enabled=true",
+        "app.todo.items.repository.in-memory.enabled=false"
+})
+@ActiveProfiles({"env-ci"})
 class TodosApiAcceptanceTest {
     @LocalServerPort
     private int serverPort;

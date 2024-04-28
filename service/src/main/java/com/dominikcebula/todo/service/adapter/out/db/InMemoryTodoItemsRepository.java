@@ -2,15 +2,13 @@ package com.dominikcebula.todo.service.adapter.out.db;
 
 import com.dominikcebula.todo.service.application.domain.model.TodoItem;
 import com.dominikcebula.todo.service.application.port.out.TodoItemsRepository;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
-@Profile("!test-acceptance")
-@Primary
+@ConditionalOnProperty(value = {"app.todo.items.repository.in-memory.enabled"})
 public class InMemoryTodoItemsRepository implements TodoItemsRepository {
     private final Map<UUID, TodoItem> todoItems = new LinkedHashMap<>();
 
