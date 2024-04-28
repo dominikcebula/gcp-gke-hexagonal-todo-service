@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.net.URI;
 import java.util.List;
@@ -21,9 +21,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@ActiveProfiles("env-ci")
+@DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 class TodosApiTest {
     @LocalServerPort
     private int serverPort;

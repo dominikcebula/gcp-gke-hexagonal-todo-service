@@ -1,7 +1,6 @@
 package com.dominikcebula.todo.service.application.domain.service;
 
 import com.dominikcebula.todo.service.adapter.out.db.InMemoryTodoItemsRepository;
-import com.dominikcebula.todo.service.adapter.out.db.WithInMemoryTodoItemsRepository;
 import com.dominikcebula.todo.service.application.domain.model.TodoItem;
 import com.dominikcebula.todo.service.application.port.in.GetAllTodoItemsUseCase;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@WithInMemoryTodoItemsRepository
 class GetAllTodoItemsServiceTest {
     @Autowired
     private GetAllTodoItemsUseCase getAllTodoItemsUseCase;

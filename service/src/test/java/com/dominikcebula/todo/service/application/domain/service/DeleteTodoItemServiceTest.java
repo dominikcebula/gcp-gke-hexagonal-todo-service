@@ -1,7 +1,6 @@
 package com.dominikcebula.todo.service.application.domain.service;
 
 import com.dominikcebula.todo.service.adapter.out.db.InMemoryTodoItemsRepository;
-import com.dominikcebula.todo.service.adapter.out.db.WithInMemoryTodoItemsRepository;
 import com.dominikcebula.todo.service.application.domain.model.TodoItem;
 import com.dominikcebula.todo.service.application.port.in.DeleteTodoItemUseCase;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import static com.dominikcebula.todo.service.application.port.in.DeleteTodoItemU
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@WithInMemoryTodoItemsRepository
 @DirtiesContext
 class DeleteTodoItemServiceTest {
     @Autowired

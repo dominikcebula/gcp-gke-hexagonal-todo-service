@@ -1,7 +1,6 @@
 package com.dominikcebula.todo.service.application.domain.service;
 
 import com.dominikcebula.todo.service.adapter.out.db.InMemoryTodoItemsRepository;
-import com.dominikcebula.todo.service.adapter.out.db.WithInMemoryTodoItemsRepository;
 import com.dominikcebula.todo.service.application.domain.model.TodoItem;
 import com.dominikcebula.todo.service.application.port.in.CreateOrUpdateTodoItemUseCase;
 import com.dominikcebula.todo.service.application.port.in.CreateOrUpdateTodoItemUseCase.CreateOrUpdateTodoItemCommand;
@@ -16,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.annotation.DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD;
 
 @SpringBootTest
-@WithInMemoryTodoItemsRepository
 @DirtiesContext(classMode = AFTER_EACH_TEST_METHOD)
 class CreateOrUpdateTodoItemServiceTest {
     @Autowired
