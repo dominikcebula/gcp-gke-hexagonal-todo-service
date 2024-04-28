@@ -102,7 +102,7 @@ API and Swagger.
 
 # CI/CD Pipeline
 
-Project uses Cloud Build and Cloud Deploy for C/CD Pipeline. Final artifact as Docker Image is stored in Artifact
+Project uses Cloud Build and Cloud Deploy for CI/CD Pipeline. Final artifact as Docker Image is stored in Artifact
 Registry and deployed to GKE.
 
 CI pipeline is described in [cloudbuild.yaml](cloudbuild.yaml) file.
