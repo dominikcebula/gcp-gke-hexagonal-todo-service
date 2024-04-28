@@ -92,7 +92,10 @@ Registry and deployed to GKE.
 CI pipeline is described in [cloudbuild.yaml](cloudbuild.yaml) file.
 Cloud Build is created using Terraform under [cloud_build.tf](deployment%2Finfrastructure%2Fcloud_build.tf).
 Docker Images are kept in Artifact Registry created
-under [docker_repository.tf](deployment%2Finfrastructure%2Fdocker_repository.tf).
+under [docker_repository.tf](deployment%2Finfrastructure%2Fdocker_repository.tf). Additionally simplified version fo CI
+pipeline runs under GitHub Actions to execute tests only. GitHub Actions pipeline is defined
+under [maven.yml](.github%2Fworkflows%2Fmaven.yml). The reason for having also simplified version of CI pipeline is
+ability to observe tests states even after GCP CI environment is unprovisioned.
 
 CD pipeline is described
 in [cloud_deploy.tf](deployment%2Finfrastructure%2Fcloud_deploy.tf) and [skaffold.yaml](skaffold.yaml).
