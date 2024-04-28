@@ -55,6 +55,17 @@ For more information on Hexagonal (Ports & Adapters) Architecture please see [He
 This project uses the Detroit School of Testing to achieve meaningful tests for Domain Services exposed using Ports.
 This is made possible by adopting Hexagonal Architecture and separating Business concerns from Technical concerns.
 
+Mocking (using for example Mockito) is limited to achieve meaningful testing. Fakes are
+used, for
+example ([InMemoryTodoItemsRepository.java](service%2Fsrc%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Ftodo%2Fservice%2Fadapter%2Fout%2Fdb%2FInMemoryTodoItemsRepository.java)),
+to test behaviors in isolation.
+
+API testing is implemented that covers end-to-end flows, including real DB to assure fakes behaviors do not drift from
+actual behaviors.
+
+Testing pyramid is preserved by limiting amount of end-to-end tests, and most tests are implemented in isolation as
+Domain Services tests.
+
 # API-first Development Approach
 
 API-first development approach is a methodology that prioritizes designing and building the application programming
