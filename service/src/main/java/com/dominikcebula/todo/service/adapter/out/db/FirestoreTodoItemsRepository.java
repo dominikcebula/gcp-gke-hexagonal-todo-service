@@ -60,12 +60,12 @@ public class FirestoreTodoItemsRepository implements TodoItemsRepository {
     }
 
     @Override
-    public void deleteById(UUID todoId) {
+    public void deleteById(UUID id) {
         try {
-            getTodosCollection().document(todoId.toString()).delete().get();
+            getTodosCollection().document(id.toString()).delete().get();
         } catch (InterruptedException | ExecutionException e) {
             interruptCurrentThreadIfRequired(e);
-            throw new RepositoryException("Error occurred while deleting todo item from db with id " + todoId, e);
+            throw new RepositoryException("Error occurred while deleting todo item from db with id " + id, e);
         }
     }
 

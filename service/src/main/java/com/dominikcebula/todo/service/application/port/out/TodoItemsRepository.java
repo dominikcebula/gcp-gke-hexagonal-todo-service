@@ -14,5 +14,5 @@ public interface TodoItemsRepository {
 
     boolean exists(UUID id);
 
-    void deleteById(UUID todoId);
+    void deleteById(UUID id);
 }
