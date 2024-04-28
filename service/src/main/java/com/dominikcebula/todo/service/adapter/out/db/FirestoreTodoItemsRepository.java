@@ -6,6 +6,7 @@ import com.dominikcebula.todo.service.application.port.out.TodoItemsRepository;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.Firestore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Repository
+@ConditionalOnProperty(value = {"spring.cloud.gcp.firestore.enabled"}, matchIfMissing = true)
 public class FirestoreTodoItemsRepository implements TodoItemsRepository {
     private final Firestore firestore;
 
