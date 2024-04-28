@@ -17,13 +17,25 @@ This repository contains a demo code sample intended to use the following concep
 * Helm
 * Skaffold
 
-# Modules structure
+# Architecture fit for problem being solved
 
-<img src="img/modules.svg"/>
+This project implements a todo service API, which lacks complex business logic. This implies that a simpler approach
+could be utilized since, fundamentally, the todo backend issue is a CRUD problem.
+
+The todo service problem is utilized here as an illustrative example to demonstrate Hexagonal (Ports & Adapters)
+Architecture without the complexity of business logic overshadowing the architectural concepts being presented.
+
+For real-life scenarios, it's important to note that Domain Driven Design (DDD) and Hexagonal (Ports & Adapters)
+Architecture are intended for problems with large and complex business logic. Applying these concepts to
+straightforward CRUD problems may lead to overengineering and undesired accidental complexity.
 
 # API
 
 API for the service is described under [api.yaml](api%2Fsrc%2Fmain%2Fresources%2Fapi.yaml).
+
+# Modules structure
+
+<img src="img/modules.svg"/>
 
 # Hexagonal (Ports & Adapters) Architecture
 
