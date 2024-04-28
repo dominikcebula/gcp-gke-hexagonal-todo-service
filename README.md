@@ -62,10 +62,15 @@ used, for
 example ([InMemoryTodoItemsRepository.java](service%2Fsrc%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Ftodo%2Fservice%2Fadapter%2Fout%2Fdb%2FInMemoryTodoItemsRepository.java)),
 to test behaviors in isolation.
 
-API testing is implemented that covers end-to-end flows.
-
 Testing pyramid is preserved by limiting amount of end-to-end tests, and most tests are implemented in isolation as
 Domain Services tests.
+
+Following types of tests are implemented (from top-to-bottom):
+
+* Acceptance Tests
+* API Tests
+* Domain Services Tests
+* Domain Model Tests
 
 More on this subject can be found under:
 
