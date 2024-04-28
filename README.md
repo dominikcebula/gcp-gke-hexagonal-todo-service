@@ -66,6 +66,12 @@ actual behaviors.
 Testing pyramid is preserved by limiting amount of end-to-end tests, and most tests are implemented in isolation as
 Domain Services tests.
 
+More on this subject can be found under:
+
+[Unit Testing - Principles, Practices, and Patterns by Vladimir Khorikov](https://khorikov.org/files/infographic.pdf)
+
+[Pragmatic Unit Testing by Vladimir Khorikov](https://assets.ctfassets.net/9n3x4rtjlya6/2TGdlhqDhmqKwaOE6QmwGQ/d173c9d91cdc84534a6880f8c8201029/Vladimir_Khorikov_Pragmatic_unit_testing.pdf)
+
 # API-first Development Approach
 
 API-first development approach is a methodology that prioritizes designing and building the application programming
