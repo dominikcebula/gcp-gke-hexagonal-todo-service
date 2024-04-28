@@ -50,6 +50,11 @@ testing of business logic in isolation.
 For more information on Hexagonal (Ports & Adapters) Architecture please see [Hexagonal Architecture Explained
 ](https://www.arhohuttunen.com/hexagonal-architecture/).
 
+# Testing approach
+
+This project uses the Detroit School of Testing to achieve meaningful tests for Domain Services exposed using Ports.
+This is made possible by adopting Hexagonal Architecture and separating Business concerns from Technical concerns.
+
 # API-first Development Approach
 
 API-first development approach is a methodology that prioritizes designing and building the application programming
