@@ -62,8 +62,7 @@ used, for
 example ([InMemoryTodoItemsRepository.java](service%2Fsrc%2Ftest%2Fjava%2Fcom%2Fdominikcebula%2Ftodo%2Fservice%2Fadapter%2Fout%2Fdb%2FInMemoryTodoItemsRepository.java)),
 to test behaviors in isolation.
 
-API testing is implemented that covers end-to-end flows, including real DB to assure fakes behaviors do not drift from
-actual behaviors.
+API testing is implemented that covers end-to-end flows.
 
 Testing pyramid is preserved by limiting amount of end-to-end tests, and most tests are implemented in isolation as
 Domain Services tests.
@@ -131,6 +130,9 @@ When running build in cloud, Docker Image will be stored in Artifact Registry.
 java -jar target/todo-service-*.jar
 ```
 
+Since service accesses Firestore in GCP Cloud you need to make sure that when executed, application
+has access to [Application Default Credentials](https://cloud.google.com/docs/authentication/provide-credentials-adc).
+
 ## Using Docker
 
 Since service accesses Firestore in GCP Cloud you need to make sure that when executed as Docker Container, application
@@ -159,13 +161,12 @@ docker run --rm -e GOOGLE_APPLICATION_CREDENTIALS=/opt/app/.config/gcloud/applic
 
 # Deployment
 
-TBD
-
-# Ideas
-
-* Introduce Performance Tests with JMeter
-* Introduce Port for Events and Pub/Sub
-* Automatic and manual builds triggers in cloud build
+Deployment on top of Google Kubernetes Engine (GKE) is done using [Cloud Deploy](https://cloud.google.com/deploy).
+Cloud Build triggers release on last step of CI pipeline described under [cloudbuild.yaml](cloudbuild.yaml).
+Kubernetes files are rendered by [Helm](https://helm.sh/).
+Helm Chart is defined under [workload](deployment%2Fworkload).
+During deployment [skaffold.yaml](skaffold.yaml) is responsible for triggering [Helm](https://helm.sh/) when executing
+under [Cloud Deploy](https://cloud.google.com/deploy).
 
 # References
 
