@@ -2,7 +2,7 @@ steps:
   - id: build-and-run-tests
     name: maven:3.9-eclipse-temurin-21
     entrypoint: mvn
-    args: [ 'clean', 'install' ]
+    args: [ 'clean', 'install', '-Pwith-acceptance-tests' ]
   - id: build-docker-container
     name: gcr.io/cloud-builders/docker
     args:
