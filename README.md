@@ -141,6 +141,16 @@ When running build in cloud, Docker Image will be stored in Artifact Registry.
 
 # Run locally
 
+## From IDE
+
+Following IntelliJ Run Configurations are included:
+
+* Application - Local - executes application locally with In Memory Todo Items Repository 
+* Application - Sandbox - executes application against resources in GCP snd env
+* Unit and Integration Tests - executes unit and integration tests
+* Acceptance Tests - executes acceptance tests using Firestore in GCP
+* All Tests - executes all tests in project
+
 ## Using Java
 
 ```shell

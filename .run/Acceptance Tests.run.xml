@@ -4,7 +4,7 @@
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="directory" />
-    <dir value="$PROJECT_DIR$/service/src/test-acceptance/java/com/dominikcebula/todo/service/adapter/in/rest" />
+    <dir value="$PROJECT_DIR$/service/src/test-acceptance/java" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
