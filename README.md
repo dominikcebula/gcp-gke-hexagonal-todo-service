@@ -1,3 +1,5 @@
+[![Todo Service GitHub Actions CI Pipeline](https://github.com/dominikcebula/gcp-gke-hexagonal-todo-service/actions/workflows/maven.yml/badge.svg)](https://github.com/dominikcebula/gcp-gke-hexagonal-todo-service/actions/workflows/maven.yml)
+
 # Introduction
 
 This repository contains a demo code sample intended to use the following concepts and technologies:
