@@ -145,7 +145,7 @@ When running build in cloud, Docker Image will be stored in Artifact Registry.
 
 Following IntelliJ Run Configurations are included:
 
-* Application - Local - executes application locally with In Memory Todo Items Repository 
+* Application - Local - executes application locally with In Memory Todo Items Repository
 * Application - Sandbox - executes application against resources in GCP snd env
 * Unit and Integration Tests - executes unit and integration tests
 * Acceptance Tests - executes acceptance tests using Firestore in GCP
@@ -154,7 +154,7 @@ Following IntelliJ Run Configurations are included:
 ## Using Java
 
 ```shell
-java -jar target/todo-service-*.jar
+java -Dspring.profiles.active=env-local -jar target/todo-service-*.jar
 ```
 
 Since service accesses Firestore in GCP Cloud you need to make sure that when executed, application
@@ -194,6 +194,44 @@ Kubernetes files are rendered by [Helm](https://helm.sh/).
 Helm Chart is defined under [workload](deployment%2Fworkload).
 During deployment [skaffold.yaml](skaffold.yaml) is responsible for triggering [Helm](https://helm.sh/) when executing
 under [Cloud Deploy](https://cloud.google.com/deploy).
+
+# Example Requests
+
+## Create a Todo Item
+
+```shell
+curl -H 'Content-Type: application/json' \
+  -d '{ "name": "Buy groceries", "completed": false }' \
+  -X POST \
+  http://localhost:8080/todos
+```
+
+## Get All Todo Items
+
+```shell
+curl -X GET localhost:8080/todos
+```
+
+## Get a Todo Item by ID
+
+```shell
+curl -X GET localhost:8080/todos/f3a1df6d-091d-4b9b-8005-4c463fb0792e
+```
+
+## Update a Todo Item by ID
+
+```shell
+curl -H 'Content-Type: application/json' \
+  -d '{ "name": "Clean the garage", "completed": true }' \
+  -X PUT \
+  http://localhost:8080/todos/f3a1df6d-091d-4b9b-8005-4c463fb0792e
+```
+
+## Delete a Todo Item by ID
+
+```shell
+curl -X DELETE localhost:8080/todos/f3a1df6d-091d-4b9b-8005-4c463fb0792e
+```
 
 # References
 
