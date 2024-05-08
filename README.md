@@ -153,16 +153,34 @@ Following IntelliJ Run Configurations are included:
 
 ## Using Java
 
+### Using In-Memory Storage
+
 ```shell
 java -Dspring.profiles.active=env-local -jar target/todo-service-*.jar
 ```
 
-Since service accesses Firestore in GCP Cloud you need to make sure that when executed, application
+### Using Cloud Firestore in Sandbox Environment
+
+```shell
+java -Dspring.profiles.active=env-snd -jar target/todo-service-*.jar
+```
+
+Since service accesses Firestore in GCP Cloud when running against Sandbox Environment
+you need to make sure that when executed, application
 has access to [Application Default Credentials](https://cloud.google.com/docs/authentication/provide-credentials-adc).
 
 ## Using Docker
 
-Since service accesses Firestore in GCP Cloud you need to make sure that when executed as Docker Container, application
+### Using In-Memory Storage
+
+```shell
+docker run --rm -e SPRING_PROFILES_ACTIVE=env-local -p 8080:8080 todo-service
+```
+
+### Using Cloud Firestore in Sandbox Environment
+
+Since service accesses Firestore in GCP Cloud when running against Sandbox Environment
+you need to make sure that when executed as Docker Container, application
 has access to [Application Default Credentials](https://cloud.google.com/docs/authentication/provide-credentials-adc).
 
 [Application Default Credentials](https://cloud.google.com/docs/authentication/provide-credentials-adc) will be stored
