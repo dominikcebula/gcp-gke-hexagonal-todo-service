@@ -117,6 +117,13 @@ CD pipeline is described
 in [cloud_deploy.tf](deployment%2Finfrastructure%2Fcloud_deploy.tf) and [skaffold.yaml](skaffold.yaml).
 Kubernetes objects are rendered using Helm and Helm Chart is available under [workload](deployment%2Fworkload) folder.
 
+# Frontend UI
+
+UI code for this service is available
+under [gcp-gke-hexagonal-todo-service-ui](https://github.com/dominikcebula/gcp-gke-hexagonal-todo-service-ui).
+
+<img alt="ui-screen" src="https://raw.githubusercontent.com/dominikcebula/gcp-gke-hexagonal-todo-service-ui/main/img/ui-screen.png"/>
+
 # Build
 
 Project is build using Maven:
