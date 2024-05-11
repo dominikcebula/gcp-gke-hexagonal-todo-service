@@ -89,8 +89,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TodoItem"
-        '404':
-          description: Todo item not found
     delete:
       summary: Delete todo item by id
       operationId: deleteTodoItemById
@@ -105,6 +103,8 @@ paths:
       responses:
         '204':
           description: Todo item was deleted
+        '404':
+          description: Todo item not found
 components:
   schemas:
     TodoItem:
