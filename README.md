@@ -224,6 +224,7 @@ under [Cloud Deploy](https://cloud.google.com/deploy).
 
 ## Create a Todo Item
 
+
 ```shell
 curl -H 'Content-Type: application/json' \
   -d '{ "name": "Buy groceries", "completed": false }' \
